@@ -30,6 +30,17 @@ def random_point(p1: Point, p2: Point) -> Point:
 
     return Point(x,y)
 
+def action(actionName: str, loc: Point = None, duration: int = None, key: str = None, wait = 0.2):
+    if actionName == 'move' and loc != None:
+        moveTo(loc.x, loc.y, duration)
+    elif actionName == 'clickRight':
+        click(button='right')
+    elif actionName == 'click':
+        click()
+    elif actionName == 'press':
+        press(key)
+    sleep(wait)
+
 def __main__():
     # Get Bank Points
     bank_p1 = get_position()
@@ -48,17 +59,16 @@ def __main__():
     inventories = ceil(1000/14)
 
     for _ in range(inventories):
-        moveTo(bank.x,bank.y,0.5)
-        sleep(0.2)
-        click(button="right")
-        sleep(0.2)
-        moveTo(menu.x,menu.y,0.2)
-        sleep(0.2)
-        click()
-        sleep(0.2)
-        moveTo(well.x,well.y)
-        sleep(0.2)
-        click()
-        sleep(1.3)
-        press('space')
-        sleep(18)
+        action('move', bank, 0.5)
+
+        action('clickRight')
+
+        action('move', menu, 0.2)
+
+        action('click')
+
+        action('move', well, 0.2)
+
+        action('click',wait=1.3)
+
+        action('press', key='space', wait=18)
